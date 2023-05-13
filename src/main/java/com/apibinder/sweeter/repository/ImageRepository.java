@@ -14,7 +14,7 @@ public interface ImageRepository  extends JpaRepository<Image, Integer> {
     @Query(value = "SELECT * \n" +
            "FROM image \n" +
            "WHERE id NOT IN (SELECT image_id FROM image_show_log WHERE user_id = :uid)\n" +
-           "AND id IN (SELECT image_id FROM image_tag WHERE tag_key = :tagKey AND tag_value = :tagValue)", nativeQuery = true)
-    List<Image> findNextImage(@Param("uid") String uid, @Param("tagKey") String tagKey, @Param("tagValue") String tagValue);
+           "AND id IN (SELECT image_id FROM image_tag WHERE tag_key = :tagKey AND tag_value = :tagValue) LIMIT 1", nativeQuery = true)
+    Image findNextImage(@Param("uid") String uid, @Param("tagKey") String tagKey, @Param("tagValue") String tagValue);
 
 }

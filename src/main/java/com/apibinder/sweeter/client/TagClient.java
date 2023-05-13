@@ -35,5 +35,17 @@ public class TagClient {
                 .block();
     }
 
+    public Map<String, Integer> getTagPercents(String uid, String tagKey){
+        return webClient.get()
+                .uri("percent/" + uid + "/" + tagKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchangeToMono(response -> {
+                    if (!HttpStatus.OK.equals(response.statusCode())) {
+                        System.out.println("Unexpected Response" + response.statusCode());
+                    }
+                    return response.bodyToMono(Map.class);
+                })
+                .block();
+    }
 
 }
