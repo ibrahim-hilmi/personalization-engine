@@ -22,12 +22,18 @@ public class ImageService {
 
     public Image getNextImage(){
         Map<String, Integer> percents = getPercentsWithSum();
-        // TODO: 13.05.2023 handle if there is no percent 
-        String selectedValue = getSelectedValue(percents);
+        Image nextImage;
 
-        Image nextImage = imageRepository.findNextImage(UserConst.USER_ID, UserConst.PREFERED_TAG_KEY, selectedValue);
+        if (percents.size() != 0){
+            String selectedValue = getSelectedValue(percents);
+            nextImage = imageRepository.findNextImage(UserConst.USER_ID, UserConst.PREFERED_TAG_KEY, selectedValue);
+        }
+
+        else {
+            nextImage = imageRepository.selectRandomImage(UserConst.USER_ID);
+        }
+
         saveImageShowLog(nextImage);
-
         return nextImage;
     }
 

@@ -15,6 +15,10 @@ public interface ImageRepository  extends JpaRepository<Image, Integer> {
            "AND id IN (SELECT image_id FROM image_tag WHERE tag_key = :tagKey AND tag_value = :tagValue) LIMIT 1", nativeQuery = true)
     Image findNextImage(@Param("uid") String uid, @Param("tagKey") String tagKey, @Param("tagValue") String tagValue);
 
+    @Query(value = "SELECT * \n" +
+           "FROM image ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    Image selectRandomImage(@Param("uid") String uid);
+
 }
 
 
