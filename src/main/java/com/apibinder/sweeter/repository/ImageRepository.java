@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ImageRepository  extends JpaRepository<Image, Integer> {
 
@@ -18,3 +16,5 @@ public interface ImageRepository  extends JpaRepository<Image, Integer> {
     Image findNextImage(@Param("uid") String uid, @Param("tagKey") String tagKey, @Param("tagValue") String tagValue);
 
 }
+
+
