@@ -17,7 +17,10 @@ public class ImageTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer imageId;
     private String tagKey;
     private String tagValue;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private Image image;
 }

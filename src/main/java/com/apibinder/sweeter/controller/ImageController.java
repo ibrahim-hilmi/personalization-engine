@@ -1,9 +1,12 @@
 package com.apibinder.sweeter.controller;
 
-import com.apibinder.sweeter.model.Image;
+import com.apibinder.sweeter.dto.ImageDTO;
 import com.apibinder.sweeter.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +19,14 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    @GetMapping
-    public ResponseEntity<Image> getImage(){
+
+    @GetMapping("/detail")
+    public ResponseEntity<ImageDTO> getImageDetail() {
         return new ResponseEntity<>(imageService.getNextImage(), HttpStatus.OK);
+    }
+
+    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
+    public Resource getImage() {
+        return new ClassPathResource("images/" + imageService.getNextImage().getPath());
     }
 }

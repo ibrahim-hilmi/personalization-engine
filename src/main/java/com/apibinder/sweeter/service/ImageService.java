@@ -1,11 +1,14 @@
 package com.apibinder.sweeter.service;
 
 import com.apibinder.sweeter.client.TagClient;
+import com.apibinder.sweeter.dto.ImageDTO;
+import com.apibinder.sweeter.mapper.ImageMapper;
 import com.apibinder.sweeter.model.Image;
 import com.apibinder.sweeter.model.ImageShowLog;
 import com.apibinder.sweeter.repository.ImageRepository;
 import com.apibinder.sweeter.repository.ImageShowLogRepository;
 import com.apibinder.sweeter.statics.UserConst;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +21,24 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final ImageShowLogRepository imageShowLogRepository;
+    private final ImageMapper imageMapper;
     private int valueSum = 0;
 
-    public Image getNextImage(){
+    @Transactional
+    public ImageDTO getNextImage(){
         Map<String, Integer> percents = getPercentsWithSum();
         Image nextImage;
 
         if (percents.size() != 0){
             String selectedValue = getSelectedValue(percents);
             nextImage = imageRepository.findNextImage(UserConst.USER_ID, UserConst.PREFERED_TAG_KEY, selectedValue);
-        }
-
-        else {
+        } else {
             nextImage = imageRepository.selectRandomImage(UserConst.USER_ID);
         }
 
         saveImageShowLog(nextImage);
-        return nextImage;
+
+        return imageMapper.map(nextImage);
     }
 
     private void saveImageShowLog(Image nextImage) {
