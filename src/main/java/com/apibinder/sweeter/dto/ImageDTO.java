@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,5 +17,11 @@ public class ImageDTO {
     private String path;
     private String title;
     private List<ImageTagDTO> imageTags;
+
+    public String getTagsText(){
+        return getImageTags().stream()
+                .map(tag -> tag.getTagKey() + "=" + tag.getTagValue())
+                .collect(Collectors.joining("&"));
+    }
 }
 

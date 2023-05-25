@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,8 +26,8 @@ public class ImageController {
         return new ResponseEntity<>(imageService.getNextImage(), HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
-    public Resource getImage() {
-        return new ClassPathResource("images/" + imageService.getNextImage().getPath());
+    @GetMapping(value = "{path}",produces = MediaType.IMAGE_JPEG_VALUE)
+    public Resource getImage(@PathVariable("path") String path) {
+        return new ClassPathResource("images/" + path);
     }
 }

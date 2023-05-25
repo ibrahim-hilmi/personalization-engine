@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class ImageTagDTO {
         private Integer id;
-        private Integer imageId;
         private String tagKey;
         private String tagValue;
 }
