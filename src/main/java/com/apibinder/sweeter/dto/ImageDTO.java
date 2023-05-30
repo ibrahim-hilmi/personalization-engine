@@ -8,6 +8,8 @@ import lombok.Setter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.apibinder.sweeter.statics.UserConst.USER_ID;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,9 +21,12 @@ public class ImageDTO {
     private List<ImageTagDTO> imageTags;
 
     public String getTagsText(){
-        return getImageTags().stream()
+        String tags = getImageTags().stream()
                 .map(tag -> tag.getTagKey() + "=" + tag.getTagValue())
                 .collect(Collectors.joining("&"));
+
+        tags += "&user_id=" + USER_ID;
+        return tags;
     }
 }
 

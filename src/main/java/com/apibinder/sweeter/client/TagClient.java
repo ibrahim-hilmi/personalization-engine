@@ -22,9 +22,9 @@ public class TagClient {
                 .baseUrl("http://localhost:8086/tag/").build();
     }
 
-    public Map<String, Integer> getTagCounts(String uid, String tagKey){
+    public Map<String, Integer> getTagCounts(String uid, String tagKey, int limit){
         return webClient.get()
-                .uri("count/" + uid + "/" + tagKey)
+                .uri("count/" + uid + "/" + tagKey + "/" + limit)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchangeToMono(response -> {
                     if (!HttpStatus.OK.equals(response.statusCode())) {
